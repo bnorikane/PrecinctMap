@@ -1,0 +1,95 @@
+/*
+--- 02 COLORS
+- Primary: #228be6 #339af0 #74c0fc
+- Accent: #549f93 
+- Accent: #E2C2FF
+- Grey: #212529 #343a40 #f1f3f5
+
+
+*/
+
+/****************************/
+/* CSS RESET                */
+/****************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  /* overflow-x: hidden; */
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-weight: 400;
+  color: #212529;
+  overflow: hidden;
+}
+
+/* map container layout */
+
+#mapdiv {
+  height: 100vh;
+  font-size: 1.4rem;
+}
+
+.grid {
+  /* border: 1px solid red; */
+
+  display: grid;
+  grid-template-columns: 26rem 1fr;
+}
+
+/* Sidebar Styling */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  /* background-color: #f1f3f5; */
+  /* background-color: #343a40;
+  color: #eee; */
+}
+
+.sidebar h4 {
+  margin: 0 0 2rem 0;
+  padding: 0.5rem 1.8rem;
+}
+
+.btn {
+  display: inline-block;
+  /* width: 75%; */
+  padding: 0.2rem 1.2rem;
+  margin: 0rem 1rem 1.8rem 1rem;
+
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #212529;
+  background-color: #74c0fc;
+  border-radius: 20rem;
+  /* remove box-shadow on dark background
+  /* box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5); */
+
+  /* only necessary for non-anchor buttons */
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+
+  /* Put transition on original "state" */
+  /* transition: background-color 0.3s; */
+  transition: all 0.5s;
+}
+
+.btn:hover {
+  background-color: #339af0;
+}
+
+.btn:active {
+  background-color: #f4f3ea;
+}
