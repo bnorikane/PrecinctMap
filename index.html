@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bnn-Web Map 201</title>
+    <title>Boulder Precinct Map</title>
 
     <link
       rel="stylesheet"
@@ -14,21 +14,8 @@
     />
 
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="src/plugins/L.Control.Pan.css" />
-    <link rel="stylesheet" href="src/plugins/L.Control.Zoomslider.css" />
-    <link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css" />
-    <link rel="stylesheet" href="src/plugins/Leaflet.PolylineMeasure.css" />
     <link rel="stylesheet" href="src/plugins/easy-button.css" />
     <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
-    />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-
-    <!-- Remove native locate control plugin use EasyButton -->
-    <!-- <link rel="stylesheet" href="src/plugins/L.Control.Locate.css" /> -->
-
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script
       src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
@@ -36,65 +23,33 @@
       crossorigin=""
     ></script>
     <script src="src/plugins/L.Control.Pan.js"></script>
-    <script src="src/plugins/L.Control.Zoomslider.js"></script>
-    <script src="src/plugins/L.Control.MousePosition.js"></script>
-    <script src="src/plugins/Leaflet.PolylineMeasure.js"></script>
     <script src="src/plugins/easy-button.js"></script>
     <script src="src/plugins/L.Control.Sidebar.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="src/plugins/leaflet-providers.js"></script>
     <!-- <script src="src/plugins/L.Control.Locate.min.js"></script> -->
   </head>
 
   <body>
-    <aside id="side-bar" class="sidebar">
-      <button id="btnLocate" class="btn">Your Location</button>
-      <button id="btnZocalo" class="btn">Zoom To Zocalo</button>
-      <button id="btnMuseo" class="btn">Zoom to Anthropology Museum</button>
-      <h4>Zoom Level: <span id="zoom-level"></span></h4>
-      <h4>Map Center: <span id="map-center"></span></h4>
-      <h4>Mouse Location: <span id="mouse-location"></span></h4>
-      <h4>Image Opacity:<span id="image-opacity">0.5</span></h4>
-      <input
-        type="range"
-        id="sldOpacity"
-        min="0"
-        max="1"
-        step="0.1"
-        value="0.5"
-      />
-    </aside>
+    <aside id="side-bar" class="sidebar"></aside>
     <div id="mapdiv" class="map"></div>
 
     <script>
       var mymap;
       var lyrOSM;
-      var lyrWatercolor;
-      var lyrTopo;
-      var lyrImagery;
-      var lyrOutdoors;
-      var lyrChapultepec;
+      var lyrOSMBright;
+      var lyrMobile;
 
-      var mrkCurrentLocation;
-      var popZocalo;
-
-      var ctlPan;
-      var ctlZoomslider;
-      var ctlMousePosition;
-      var ctlPolylineMeasure;
-      var ctlEasyButton;
       var ctlSidebar;
       var ctlLayers;
       var objBasemaps;
       var objOverlays;
 
-      const museoLatLng = [19.42596, -99.1862];
-      const zocaloLatLng = [19.43262, -99.13325];
+      const BoulderLatLng = [40.025, -105.28];
 
       // Set map default view
       let config = {
-        center: zocaloLatLng,
-        zoom: 13,
+        center: BoulderLatLng,
+        zoom: 11,
         zoomControl: false,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -106,179 +61,19 @@
       // Define several basemap providers
       lyrOSM = L.tileLayer.provider("OpenStreetMap.Mapnik");
       lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
-      lyrTopo = L.tileLayer.provider("OpenTopoMap");
-      lyrImagery = L.tileLayer.provider("Esri.WorldImagery");
-      lyrOutdoors = L.tileLayer.provider("Thunderforest.Outdoors");
       lyrMobile = L.tileLayer.provider("Thunderforest.MobileAtlas");
-      lyrWatercolor = L.tileLayer.provider("Stamen.Watercolor");
 
       mymap.addLayer(lyrMobile);
-
-      lyrChapultepec = L.imageOverlay(
-        "img/chapultepec.png",
-        [
-          [19.42993, -99.20843],
-          [19.40621, -99.17453],
-        ],
-        { opacity: 0.5 }
-      ).addTo(mymap);
 
       objBasemaps = {
         "Open Street Maps": lyrOSM,
         "OSM Bright": lyrOSMBright,
         Mobile: lyrMobile,
-        Topo: lyrTopo,
-        Imagery: lyrImagery,
-        Outdoors: lyrOutdoors,
-        Watercolor: lyrWatercolor,
-      };
-
-      objOverlays = {
-        "Chapultepec Image": lyrChapultepec,
       };
 
       ctlLayers = L.control.layers(objBasemaps, objOverlays).addTo(mymap);
 
-      // add Stamen Watercolor to map.
-      // L.tileLayer.provider("OpenTopoMap").addTo(mymap);
-
-      // Automatically center map at user's current location
-      // setInterval(function () {
-      //   mymap.locate();
-      // }, 5000);
-
-      // NOTE: lowercase L.control.pan()
-      ctlPan = L.control.pan().addTo(mymap);
-      ctlZoomslider = L.control
-        .zoomslider({ position: "topright" })
-        .addTo(mymap);
-      ctlMousePosition = L.control.mousePosition().addTo(mymap);
-      ctlPolylineMeasure = L.control.polylineMeasure().addTo(mymap);
-      ctlEasyButton = L.easyButton(
-        '<span><ion-icon name="information"></ion-icon></span>',
-        function () {
-          ctlSidebar.toggle();
-        }
-      ).addTo(mymap);
       ctlSidebar = L.control.sidebar("side-bar").addTo(mymap);
-
-      // L.control.locate().addTo(mymap);var map = L.map('map').setView([0, 0], 2);
-      L.Control.geocoder().addTo(mymap);
-
-      popZocalo = L.popup();
-      popZocalo.setLatLng([19.43262, -99.13325]);
-      popZocalo.setContent("<h2>Zocalo</h2>");
-
-      mrkMuseo = L.marker([19.42596, -99.1862], { draggable: true }).addTo(
-        mymap
-      );
-      mrkMuseo.bindTooltip("Anthropology");
-
-      document.getElementById("zoom-level").innerHTML = mymap.getZoom();
-
-      // mymap.on("click", function (e) {
-      //   if (e.originalEvent.shiftKey) {
-      //     alert(mymap.getZoom());
-      //   } else {
-      //     alert(e.latlng.toString());
-      //   }
-      // });
-
-      // NOTE: "contextmenu" means rightclick event
-      mymap.on("contextmenu", function (e) {
-        var dtCurrentTime = new Date();
-        L.marker(e.latlng)
-          .addTo(mymap)
-          .bindPopup(e.latlng.toString() + ",<br>" + dtCurrentTime.toString());
-      });
-
-      // mymap.on("keypress", function (e) {
-      //   if (e.originalEvent.key == "l") {
-      //     mymap.locate();
-      //   }
-      // });
-
-      mymap.on("locationfound", function (e) {
-        console.log(e);
-        if (mrkCurrentLocation) {
-          mrkCurrentLocation.remove();
-        }
-        mrkCurrentLocation = L.circle(e.latlng, {
-          radius: e.accuracy / 2,
-        }).addTo(mymap);
-        mymap.setView(e.latlng, 14);
-      });
-
-      mymap.on("locationerror", function (e) {
-        console.log(e);
-        alert("Location was not found");
-      });
-
-      // Need to replace JQuery function $("#zoom-level").html(mymap.getZoom());
-      mymap.on("zoomend", function () {
-        // $("#zoom-level").html(mymap.getZoom());
-        document.getElementById("zoom-level").innerHTML = mymap.getZoom();
-      });
-
-      mymap.on("moveend", function () {
-        document.getElementById("map-center").innerHTML = LatLngToArrayString(
-          mymap.getCenter()
-        );
-      });
-
-      mymap.on("mousemove", function (e) {
-        document.getElementById("mouse-location").innerHTML =
-          LatLngToArrayString(e.latlng);
-      });
-
-      mrkMuseo.on("dragend", function () {
-        mrkMuseo.setTooltipContent(
-          "Current Location: " +
-            mrkMuseo.getLatLng().toString() +
-            "<br>" +
-            "Distance to Anthropology Museum: " +
-            mrkMuseo.getLatLng().distanceTo([19.42596, -99.1862]).toFixed(0)
-        );
-      });
-
-      const btnLocate = document.querySelector("#btnLocate");
-      btnLocate.addEventListener("click", function () {
-        mymap.locate();
-      });
-
-      document
-        .querySelector("#btnZocalo")
-        .addEventListener("click", function () {
-          mymap.setView([19.43262, -99.13325], 17);
-        });
-
-      document
-        .querySelector("#btnMuseo")
-        .addEventListener("click", function () {
-          mymap.setView(museoLatLng, 17);
-          mrkMuseo.setLatLng(museoLatLng);
-          mrkMuseo.setTooltipContent("Anthropology Museum");
-        });
-
-      // add slider for opacity of Chapultepec png
-      document
-        .querySelector("#sldOpacity")
-        .addEventListener("change", function () {
-          document.querySelector("#image-opacity").innerHTML = this.value;
-          lyrChapultepec.setOpacity(this.value);
-        });
-
-      function LatLngToArrayString(ll) {
-        return "[" + ll.lat.toFixed(5) + ", " + ll.lng.toFixed(5) + "]";
-      }
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
   </body>
 </html>
