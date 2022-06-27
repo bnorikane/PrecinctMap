@@ -26,6 +26,8 @@
     <script src="src/plugins/easy-button.js"></script>
     <script src="src/plugins/L.Control.Sidebar.js"></script>
     <script src="src/plugins/leaflet-providers.js"></script>
+
+    <script type="text/javascript" src="src/plugins/leaflet.ajax.js"></script>
     <!-- <script src="src/plugins/L.Control.Locate.min.js"></script> -->
   </head>
 
@@ -34,10 +36,14 @@
     <div id="mapdiv" class="map"></div>
 
     <script>
+      // Basemap variables
       var mymap;
       var lyrOSM;
       var lyrOSMBright;
       var lyrMobile;
+
+      // District Layer variables
+      var lyrPrecincts;
 
       var ctlSidebar;
       var ctlLayers;
@@ -63,12 +69,22 @@
       lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
       lyrMobile = L.tileLayer.provider("Thunderforest.MobileAtlas");
 
+      // Add default basemap provider to map
       mymap.addLayer(lyrMobile);
 
+      // Create Overlay layers
+      lyrPrecincts = L.geoJSON.ajax("data/Precincts.geojson");
+
+      // Create Basemaps object for Layers Control
       objBasemaps = {
         "Open Street Maps": lyrOSM,
         "OSM Bright": lyrOSMBright,
         Mobile: lyrMobile,
+      };
+
+      // Create Overlays object for Layer Control
+      objOverlays = {
+        Precincts: lyrPrecincts,
       };
 
       ctlLayers = L.control.layers(objBasemaps, objOverlays).addTo(mymap);
