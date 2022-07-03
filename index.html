@@ -64,21 +64,37 @@
       // Create mymap and display in <div id='mapdiv'>
       mymap = L.map("mapdiv", config);
 
-      // Define several basemap providers
-      lyrOSM = L.tileLayer.provider("OpenStreetMap.Mapnik");
-      lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
+      // // Define several basemap providers
+      // lyrOSM = L.tileLayer.provider("OpenStreetMap.Mapnik");
+      // lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
       lyrMobile = L.tileLayer.provider("Thunderforest.MobileAtlas");
 
       // Add default basemap provider to map
       mymap.addLayer(lyrMobile);
 
       // Create Overlay layers
-      lyrPrecincts = L.geoJSON.ajax("data/Precincts.geojson");
+      lyrPrecincts = L.geoJSON.ajax("data/Precincts.geojson", {
+        color: "red",
+        fill: false,
+        weight: 2,
+      });
+
+      labelRect = L.rectangle([
+        [40.0246, -105.2887],
+        [40.01, -105.3],
+      ]);
+
+      labelRect.bindTooltip("My Rectangle", {
+        permanent: true,
+        direction: "center",
+      });
+
+      labelRect.addTo(mymap);
+
+      mymap.addLayer(lyrPrecincts);
 
       // Create Basemaps object for Layers Control
       objBasemaps = {
-        "Open Street Maps": lyrOSM,
-        "OSM Bright": lyrOSMBright,
         Mobile: lyrMobile,
       };
 
