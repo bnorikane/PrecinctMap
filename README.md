@@ -1,50 +1,55 @@
-# Udemy Course - GIS with Leaflet
+# Boulder County Dems Field Team Map
 
-This course teaches creating an interactive webmap using Leaflet.js.
+Web map showing BCDP Field Precincts and Areas
 
-- The course was released in 2017, 5 years ago.
-- Course tech stack: local Apache, Bootstrap, JQuery, Leaflet 1.0
-- I migrated course code to a modern stack.
+- June 17, 2022
+- Bruce Norikane
+- Status: in development
+- Version: 0.01
 
-### This repo tracks the major course project called Webmap201.
+## Features
 
-- Create a Leaflet map of Zocolo, Mexico
-- Add and display spatial data layers
+### Minimum Viable Product
 
-### I migrated the course code to my Dev environment
+- Map Geo Features
+  - x Boulder County roads and landmarks
+  - x Boulder County Precincts
+  - BCDP Field Areas
+  - Boulder County border
+- Map UI
+  - x Zoomable
+  - x scrollable
+  - x Layer Control
+    - x Toggle Geo Features visible/hidden
+  - x Highlight Precinct
+    - x on hover
+    - x on click
+  - Info Box
+    - Precinct Number
+    - Precinct data
+    - PCP
+    - AC
 
-- Updated Leaflet to 1.8 from 1.0.3+ed36a04
-- Replaced local Leaflet CSS and JS files with links to Leaflet UNPKG CDN
-- Replaced Bootstrap with raw CSS3
-- Replaced JQuery with raw Javascript
-- Replaced Apache/XAMPP with Live Sever
+### Potential Enhancements
 
-## Udemy Course Info
+- CD, HD, SD borders
+- Security
 
-- Title: Display and Analyze GIS Data on the Web With Leaflet
-- Instructor: Michael Miller
-- Course released in 2017
-- My start date: May 19, 2022
-- class files: /c/dev/classes/gis-leaflet
+  - Access limited to BCDP Field Team
+    - Field Team Leads
+    - Area Coordinators
+    - Precinct Organizers
 
-## Course Dev Environment
+- Field Team list
 
-- OS: Windows
-- Editor: Brackets
-- Web Server: Apache installed locally
-- Leaflet 1.7
-- Bootstrap
-- Jquery
-- Project folder:  
-  Miller develops Leaflet maps in a project folder in the xampp/htdocs folder
-  - c:\xampp\htdocs\webmap201
+  - Area Coordinators
+  - Precinct Organizers
+  - Orphan Precincts
+  - Orphan Areas
 
-## My Leaflet Dev Environment
-
-- OS: Windows
-- Editor: VScode
-- Web Server: Live Server VScode extension
-- Leaflet 1.8
-- no CSS framework
-- no Javascripte framework
-- Project folder: /c/dev/webmap201
+  - Menu
+    - Go to BocoDems.org
+    - Go to ODB?
+    - Go to Field Team list?
+    - Contact BCDP
+    - Contact BCDP Field Team Leads
