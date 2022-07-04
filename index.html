@@ -22,8 +22,6 @@
       integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
       crossorigin=""
     ></script>
-    <script src="src/plugins/L.Control.Pan.js"></script>
-    <script src="src/plugins/easy-button.js"></script>
     <script src="src/plugins/L.Control.Sidebar.js"></script>
     <script src="src/plugins/leaflet-providers.js"></script>
 
@@ -35,87 +33,6 @@
     <aside id="side-bar" class="sidebar"></aside>
     <div id="mapdiv" class="map"></div>
 
-    <script>
-      // Basemap variables
-      var map;
-      var lyrOSM;
-      var lyrOSMBright;
-      var lyrMobile;
-
-      // District Layer variables
-      var lyrPrecincts;
-
-      var ctlSidebar;
-      var ctlLayers;
-      var objBasemaps;
-      var objOverlays;
-
-      const boulderLatlng = [40.025, -105.28];
-
-      // Set map default view
-      let config = {
-        center: boulderLatlng,
-        zoom: 11,
-        zoomControl: true,
-        attribution:
-          '&copy; <a href="https:/https://www.bocodems.org/">&copy; 2022. Boulder County Democratic Party.</a> All rights reserved.',
-      };
-
-      // Create mymap and display in <div id='mapdiv'>
-      map = L.map("mapdiv", config);
-
-      // BASEMAPS
-      // Define several basemap providers
-      // lyrOSM = L.tileLayer.provider("OpenStreetMap.Mapnik");
-      // lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
-      lyrMobile = L.tileLayer.provider("Thunderforest.MobileAtlas");
-
-      // Add default basemap provider to map
-      map.addLayer(lyrMobile);
-
-      // OVERLAY LAYERS
-
-      lyrPrecincts = L.geoJSON.ajax("data/Precincts.geojson", {
-        color: "blue",
-        fill: false,
-        weight: 2,
-      });
-
-      map.addLayer(lyrPrecincts);
-
-      // Create Basemaps object for Layers Control
-      objBasemaps = {
-        Mobile: lyrMobile,
-      };
-
-      // LAYER CONTROL
-      // Create Overlays object for Layer Control
-      objOverlays = {
-        Precincts: lyrPrecincts,
-      };
-
-      ctlLayers = L.control
-        .layers(objBasemaps, objOverlays, { position: "topleft" })
-        .addTo(map);
-
-      // Map Info control
-
-      let info = L.control({ position: "topleft" });
-
-      info.onAdd = function (map) {
-        this._div = L.DomUtil.create("div", "info");
-        this.update();
-        return this._div;
-      };
-
-      // method to update the control with feature properties
-      info.update = function (props) {
-        this._div.innerHTML = "<h4>Precinct</h4>" + "Hover over a precinct";
-      };
-
-      info.addTo(map);
-
-      // ctlSidebar = L.control.sidebar("side-bar").addTo(mymap);
-    </script>
+    <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>
