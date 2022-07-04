@@ -1,15 +1,15 @@
-/*
---- 02 COLORS
+/****************************/
+/*    02 COLORS
+ 
 - Primary: #228be6 #339af0 #74c0fc
 - Accent: #549f93 
 - Accent: #E2C2FF
 - Grey: #212529 #343a40 #f1f3f5
 
-
-*/
+*****************************/
 
 /****************************/
-/* CSS RESET                */
+/*    CSS RESET             */
 /****************************/
 * {
   margin: 0;
@@ -27,11 +27,13 @@ body {
   font-size: 1.4rem;
   line-height: 1;
   font-weight: 400;
-  color: #212529;
+  color: #343a40;
   overflow: hidden;
 }
 
-/* map container layout */
+/****************************/
+/*   MAP CONTAINER LAYOUT   */
+/****************************/
 
 #mapdiv {
   height: 100vh;
@@ -45,7 +47,26 @@ body {
   grid-template-columns: 26rem 1fr;
 }
 
-/* Sidebar Styling */
+/****************************/
+/*   INFO                   */
+/****************************/
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  /* background: white; */
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
+/****************************/
+/*        SIDEBAR           */
+/****************************/
 
 .sidebar {
   display: flex;

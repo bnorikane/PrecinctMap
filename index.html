@@ -13,9 +13,9 @@
       crossorigin=""
     />
 
-    <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="src/plugins/easy-button.css" />
     <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script
       src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
@@ -37,7 +37,7 @@
 
     <script>
       // Basemap variables
-      var mymap;
+      var map;
       var lyrOSM;
       var lyrOSMBright;
       var lyrMobile;
@@ -50,62 +50,72 @@
       var objBasemaps;
       var objOverlays;
 
-      const BoulderLatLng = [40.025, -105.28];
+      const boulderLatlng = [40.025, -105.28];
 
       // Set map default view
       let config = {
-        center: BoulderLatLng,
+        center: boulderLatlng,
         zoom: 11,
-        zoomControl: false,
+        zoomControl: true,
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a href="https:/https://www.bocodems.org/">&copy; 2022. Boulder County Democratic Party.</a> All rights reserved.',
       };
 
       // Create mymap and display in <div id='mapdiv'>
-      mymap = L.map("mapdiv", config);
+      map = L.map("mapdiv", config);
 
-      // // Define several basemap providers
+      // BASEMAPS
+      // Define several basemap providers
       // lyrOSM = L.tileLayer.provider("OpenStreetMap.Mapnik");
       // lyrOSMBright = L.tileLayer.provider("Stadia.OSMBright");
       lyrMobile = L.tileLayer.provider("Thunderforest.MobileAtlas");
 
       // Add default basemap provider to map
-      mymap.addLayer(lyrMobile);
+      map.addLayer(lyrMobile);
 
-      // Create Overlay layers
+      // OVERLAY LAYERS
+
       lyrPrecincts = L.geoJSON.ajax("data/Precincts.geojson", {
-        color: "red",
+        color: "blue",
         fill: false,
         weight: 2,
       });
 
-      labelRect = L.rectangle([
-        [40.0246, -105.2887],
-        [40.01, -105.3],
-      ]);
-
-      labelRect.bindTooltip("My Rectangle", {
-        permanent: true,
-        direction: "center",
-      });
-
-      labelRect.addTo(mymap);
-
-      mymap.addLayer(lyrPrecincts);
+      map.addLayer(lyrPrecincts);
 
       // Create Basemaps object for Layers Control
       objBasemaps = {
         Mobile: lyrMobile,
       };
 
+      // LAYER CONTROL
       // Create Overlays object for Layer Control
       objOverlays = {
         Precincts: lyrPrecincts,
       };
 
-      ctlLayers = L.control.layers(objBasemaps, objOverlays).addTo(mymap);
+      ctlLayers = L.control
+        .layers(objBasemaps, objOverlays, { position: "topleft" })
+        .addTo(map);
 
-      ctlSidebar = L.control.sidebar("side-bar").addTo(mymap);
+      // Map Info control
+
+      let info = L.control({ position: "topleft" });
+
+      info.onAdd = function (map) {
+        this._div = L.DomUtil.create("div", "info");
+        this.update();
+        return this._div;
+      };
+
+      // method to update the control with feature properties
+      info.update = function (props) {
+        this._div.innerHTML = "<h4>Precinct</h4>" + "Hover over a precinct";
+      };
+
+      info.addTo(map);
+
+      // ctlSidebar = L.control.sidebar("side-bar").addTo(mymap);
     </script>
   </body>
 </html>
