@@ -1,15 +1,15 @@
-// Set map default view
-const boulderLatlng = [40.025, -105.28];
-let config = {
-  center: boulderLatlng,
+// Set map options
+const mapCenter = [40.025, -105.28];
+let options = {
+  center: mapCenter,
   zoom: 11,
   zoomControl: true,
   attribution:
     '&copy; <a href="https:/https://www.bocodems.org/">&copy; 2022. Boulder County Democratic Party.</a> All rights reserved.',
 };
 
-// Create mymap and display in <div id='mapdiv'>
-const map = L.map("mapdiv", config);
+// Create L.map object and display in <div id=map>
+const map = L.map("map", options);
 
 // BASEMAPS
 

@@ -7,6 +7,20 @@ Web map showing BCDP Field Precincts and Areas
 - Status: in development
 - Version: 0.01
 
+## Issues
+
+- Attribution in L.map options not displaying
+
+```
+let options = {
+  center: mapCenter,
+  zoom: 11,
+  zoomControl: true,
+  attribution:
+    '&copy; <a href="https:/https://www.bocodems.org/">&copy; 2022. Boulder County Democratic Party.</a> All rights reserved.',
+};
+```
+
 ## Features
 
 ### Minimum Viable Product
@@ -24,15 +38,19 @@ Web map showing BCDP Field Precincts and Areas
   - x Highlight Precinct
     - x on hover
     - x on click
+  - Precinct # visible on map
   - Info Box
     - Precinct Number
-    - Precinct data
-    - PCP
-    - AC
+    - ? Precinct data
+    - ? PCP
+    - ? AC
 
 ### Potential Enhancements
 
 - CD, HD, SD borders
+
+- Search for precinct
+
 - Security
 
   - Access limited to BCDP Field Team
